@@ -3,6 +3,8 @@ require_relative '../../../lib/domain/use_cases/create_obfuscated_git_repository
 RSpec.describe CreateObfuscatedGitRepository do
   let(:in_memory_git_repo_repository) { MockGitRepoRepository.new }
 
+  before { in_memory_git_repo_repository.destroy_all }
+
   subject(:create_obfuscated_git_repository) do
     described_class.new(git_repo_repository: in_memory_git_repo_repository)
   end
@@ -17,8 +19,15 @@ RSpec.describe CreateObfuscatedGitRepository do
 
     it 'returns an created obfuscated git repository' do
       result = create_obfuscated_git_repository.call(git_repository_url)
-      git_repository = result.value!
-      expect(git_repository.id).to_not be(nil)
+      git_repository = in_memory_git_repo_repository.all.last
+      expect(result.value!).to eq(
+        id: git_repository.id,
+        original_url: git_repository.original_url,
+        obfuscated_url: git_repository.obfuscated_url,
+        name: git_repository.name,
+        owner_name: git_repository.owner_name,
+        provider_name: git_repository.provider_name
+      )
     end
   end
 end

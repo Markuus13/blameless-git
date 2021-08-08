@@ -1,5 +1,5 @@
 class GitRepository
-  attr_accessor :original_url, :obfuscated_url, :name, :owner_name, :provider_name
+  attr_accessor :id, :original_url, :obfuscated_url, :name, :owner_name, :provider_name
 
   def initialize(
     original_url: nil,

@@ -6,8 +6,5 @@ gem 'dry-monads'
 
 group :test, :development do
   gem 'rspec'
-end
-
-group :test do
   gem 'byebug'
 end
