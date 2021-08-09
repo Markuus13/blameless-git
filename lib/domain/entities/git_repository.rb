@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GitRepository
   attr_accessor :id, :original_url, :obfuscated_url, :name, :owner_name, :provider_name
 

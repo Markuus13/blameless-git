@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MockGitRepoRepository
   @@store = []
   @@id_counter = 0

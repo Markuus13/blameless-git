@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dry/monads'
 
 require_relative '../constants'
@@ -21,7 +23,7 @@ class ExtractAttributesFromGitUrl
     {
       provider_name: url_matches[1],
       owner_name: url_matches[2],
-      name: url_matches[3],
+      name: url_matches[3]
     }
   end
 end
