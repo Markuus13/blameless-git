@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../../../lib/domain/use_cases/create_obfuscated_git_repository'
 
 RSpec.describe CreateObfuscatedGitRepository do

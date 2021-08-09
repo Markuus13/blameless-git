@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../../../lib/domain/services/extract_attributes_from_git_url'
 
 RSpec.describe ExtractAttributesFromGitUrl do
@@ -16,7 +18,7 @@ RSpec.describe ExtractAttributesFromGitUrl do
       original_url: git_repository_url,
       provider_name: 'github',
       owner_name: 'Markuus13',
-      name: 'CleanFoodJava',
+      name: 'CleanFoodJava'
     )
   end
 

@@ -1,0 +1,38 @@
+version: 2.1
+
+orbs:
+  ruby: circleci/ruby@1.1
+
+jobs:
+  build:
+    docker:
+      - image: 'cimg/ruby:3.0.1'
+    steps:
+      - checkout
+      - ruby/install:
+          version: '3.0'
+  checking:
+    docker:
+      - image: 'cimg/ruby:3.0.1'
+    steps:
+      - checkout
+      - ruby/install-deps
+      - ruby/rubocop-check
+  test:
+    docker:
+      - image: 'cimg/ruby:3.0.1'
+    environment:
+      COVERAGE: true
+    steps:
+      - checkout
+      - ruby/install-deps
+      - ruby/rspec-test
+
+workflows:
+  build:
+    jobs:
+      - build
+      - checking
+      - test:
+          requires:
+            - build

@@ -1,0 +1,28 @@
+AllCops:
+  TargetRubyVersion: 3.0
+  NewCops: enable
+  Exclude:
+    - spec/support/coverage.rb
+    - "vendor/**/*"
+    - "vendor/**/.*" # See https://github.com/bbatsov/rubocop/issues/4832
+
+Layout/LineLength:
+  Max: 120
+
+Lint/BooleanSymbol:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Style/ClassVars:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
