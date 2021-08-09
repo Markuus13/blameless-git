@@ -23,6 +23,7 @@ jobs:
       - image: 'cimg/ruby:3.0.1'
     environment:
       COVERAGE: true
+    parallelism: 3
     steps:
       - checkout
       - ruby/install-deps
