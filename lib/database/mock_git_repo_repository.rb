@@ -8,6 +8,11 @@ class MockGitRepoRepository
     @@store
   end
 
+  def find(git_repository_id)
+    @@store.find { |repo| repo.id == git_repository_id }
+  end
+
+  # Not thread safe
   def save(git_repository)
     index = @@store.find_index { |repo| repo.id == git_repository.id }
     if index.nil?
