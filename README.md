@@ -17,3 +17,13 @@ This application should provide an obfuscated interface of a public git reposito
 To run all tests:
 
 `bundle exec rspec`
+
+### Running scripts
+
+To run a CI verifications locally, first give write permissions to its script:
+
+`chmod +x scripts/ci`
+
+Then whenever you need:
+
+`./scripts/ci`

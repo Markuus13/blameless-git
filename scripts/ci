@@ -1,0 +1,27 @@
+#!/bin/bash
+
+print_ruby_version() {
+  echo "Using $(ruby -v)"
+  echo
+}
+
+install_dependencies() {
+  bundle install
+}
+
+run_code_quality_checks() {
+  bundle exec rubocop
+}
+
+run_tests() {
+  bundle exec rspec
+}
+
+main() {
+  print_ruby_version
+  install_dependencies
+  run_code_quality_checks
+  run_tests
+}
+
+main
