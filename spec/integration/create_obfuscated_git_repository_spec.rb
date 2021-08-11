@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../../lib/domain/use_cases/create_obfuscated_git_repository'
+require_relative '../../lib/domain/use_cases/create_obfuscated_git_repository'
 
 RSpec.describe CreateObfuscatedGitRepository do
   let(:in_memory_git_repo_repository) { MockGitRepoRepository.new }

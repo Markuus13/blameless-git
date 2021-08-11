@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../../lib/domain/services/extract_attributes_from_git_url'
+require_relative '../../../../lib/domain/services/extract_attributes_from_git_url'
 
 RSpec.describe ExtractAttributesFromGitUrl do
   subject(:extract_attributes_from_git_url) { described_class.new }
