@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../../../../lib/domain/services/extract_attributes_from_git_url'
+require_relative '../../../../lib/domain/services/extract_attributes_from_git_url_service'
 
-RSpec.describe ExtractAttributesFromGitUrl do
+RSpec.describe ExtractAttributesFromGitUrlService do
   subject(:extract_attributes_from_git_url) { described_class.new }
 
   let(:git_repository_url) { 'https://github.com/Markuus13/CleanFoodJava' }

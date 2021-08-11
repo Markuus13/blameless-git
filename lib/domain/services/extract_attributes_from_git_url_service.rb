@@ -4,7 +4,7 @@ require 'dry/monads'
 
 require_relative '../constants'
 
-class ExtractAttributesFromGitUrl
+class ExtractAttributesFromGitUrlService
   include Dry::Monads[:result]
 
   def call(repository_url)
