@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../../lib/environment/retrieve_salt_adapter'
+require_relative '../../../../lib/adapters/environment/retrieve_salt_adapter'
 
 RSpec.describe RetrieveSaltAdapter do
   subject(:retrieve_salt_service) { described_class.new }

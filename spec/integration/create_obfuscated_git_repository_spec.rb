@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative '../../lib/domain/use_cases/create_obfuscated_git_repository'
-require_relative '../../lib/database/mock_git_repo_repository'
-require_relative '../../lib/environment/mock_retrieve_salt_adapter'
+require_relative '../../lib/adapters/database/mock_git_repo_repository'
+require_relative '../../lib/adapters/environment/mock_retrieve_salt_adapter'
 
 RSpec.describe CreateObfuscatedGitRepository do
   context 'when given url is a valid git repository url' do
@@ -89,25 +89,15 @@ RSpec.describe CreateObfuscatedGitRepository do
         )
       end
 
-      subject(:create_obfuscated_git_repository) do
-        described_class.new(
-          git_repo_repository: in_memory_git_repo_repository,
-          obfuscate_url_service: obfuscate_url_service
-        )
-      end
-
-      let(:provider) { 'github' }
-      let(:owner) { 'sirius-black' }
-      let(:repo_name) { 'marauders-map' }
-      let(:git_repository_url) { "https://#{provider}.com/#{owner}/#{repo_name}" }
+      let(:git_repository_url) { 'https://github.com/sirius-black/marauders-map' }
 
       before do
         git_repository = GitRepository.new(
           original_url: git_repository_url,
           obfuscated_url: '3URM7qomHSvNtd1VWZQl2LsjDHmqIMAdDv4qwx7ZW4s=',
-          name: repo_name,
-          owner_name: owner,
-          provider_name: provider
+          name: 'marauders-map',
+          owner_name: 'sirius-black',
+          provider_name: 'github'
         )
         in_memory_git_repo_repository.save(git_repository)
       end

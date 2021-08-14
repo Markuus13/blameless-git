@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../../../lib/database/mock_git_repo_repository'
-require_relative '../../../lib/domain/entities/git_repository'
+require_relative '../../../../lib/adapters/database/mock_git_repo_repository'
+require_relative '../../../../lib/domain/entities/git_repository'
 
 RSpec.describe MockGitRepoRepository do
   subject(:mock_git_repo_repository) { described_class.new }

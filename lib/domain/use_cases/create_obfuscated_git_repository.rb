@@ -3,8 +3,8 @@
 require 'dry/monads'
 require 'dry/monads/do'
 
-require_relative '../../database/mock_git_repo_repository'
-require_relative '../../environment/retrieve_salt_adapter'
+require_relative '../../adapters/database/mock_git_repo_repository'
+require_relative '../../adapters/environment/retrieve_salt_adapter'
 require_relative '../entities/git_repository'
 require_relative '../services/extract_attributes_from_git_url_service'
 require_relative '../services/obfuscate_url_service'
