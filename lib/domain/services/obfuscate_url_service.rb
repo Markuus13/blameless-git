@@ -4,7 +4,7 @@ require 'digest'
 require 'dry/monads'
 require 'dry/monads/do'
 
-require_relative '../../../environment/retrieve_salt_adapter'
+require_relative '../../environment/retrieve_salt_adapter'
 
 class ObfuscateUrlService
   include Dry::Monads[:result]

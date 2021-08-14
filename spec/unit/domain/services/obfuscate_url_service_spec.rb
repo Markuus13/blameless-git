@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../../../../../lib/domain/services/obfuscation/obfuscate_url_service'
-require_relative '../../../../../lib/environment/mock_retrieve_salt_adapter'
+require_relative '../../../../lib/domain/services/obfuscate_url_service'
+require_relative '../../../../lib/environment/mock_retrieve_salt_adapter'
 
 RSpec.describe ObfuscateUrlService do
   subject(:obfuscate_url_service) do
