@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative '../../../../../lib/domain/services/obfuscation/obfuscate_url_service'
-require_relative '../../../../../lib/domain/services/obfuscation/mock_retrieve_salt_service'
+require_relative '../../../../../lib/environment/mock_retrieve_salt_adapter'
 
 RSpec.describe ObfuscateUrlService do
   subject(:obfuscate_url_service) do
-    described_class.new(retrieve_salt_service: MockRetrieveSaltService.new)
+    described_class.new(retrieve_salt_adapter: MockRetrieveSaltAdapter.new)
   end
 
   let(:git_repository_url) { 'https://github.com/Markuus13/CleanFoodJava' }

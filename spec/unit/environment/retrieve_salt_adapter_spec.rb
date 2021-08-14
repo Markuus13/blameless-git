@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../../../../../lib/domain/services/obfuscation/retrieve_salt_service'
+require_relative '../../../lib/environment/retrieve_salt_adapter'
 
-RSpec.describe RetrieveSaltService do
+RSpec.describe RetrieveSaltAdapter do
   subject(:retrieve_salt_service) { described_class.new }
 
   after { ENV['OBFUSCATION_URL_SECRET'] = nil }

@@ -1,21 +1,18 @@
 # frozen_string_literal: true
 
 require_relative '../../lib/domain/use_cases/create_obfuscated_git_repository'
-require_relative '../../lib/domain/services/obfuscation/mock_retrieve_salt_service'
 require_relative '../../lib/database/mock_git_repo_repository'
+require_relative '../../lib/environment/mock_retrieve_salt_adapter'
 
 RSpec.describe CreateObfuscatedGitRepository do
   context 'when given url is a valid git repository url' do
     let(:in_memory_git_repo_repository) { MockGitRepoRepository.new }
-    let(:mock_retrieve_salt_service) { MockRetrieveSaltService.new }
-    let(:obfuscate_url_service) do
-      ObfuscateUrlService.new(retrieve_salt_service: mock_retrieve_salt_service)
-    end
+    let(:mock_retrieve_salt_adapter) { MockRetrieveSaltAdapter.new }
 
     subject(:create_obfuscated_git_repository) do
       described_class.new(
         git_repo_repository: in_memory_git_repo_repository,
-        obfuscate_url_service: obfuscate_url_service
+        retrieve_salt_adapter: mock_retrieve_salt_adapter
       )
     end
 
@@ -52,15 +49,12 @@ RSpec.describe CreateObfuscatedGitRepository do
   describe 'failures' do
     context 'when given url is not a valid git repository url' do
       let(:in_memory_git_repo_repository) { MockGitRepoRepository.new }
-      let(:mock_retrieve_salt_service) { MockRetrieveSaltService.new }
-      let(:obfuscate_url_service) do
-        ObfuscateUrlService.new(retrieve_salt_service: mock_retrieve_salt_service)
-      end
+      let(:mock_retrieve_salt_adapter) { MockRetrieveSaltAdapter.new }
 
       subject(:create_obfuscated_git_repository) do
         described_class.new(
           git_repo_repository: in_memory_git_repo_repository,
-          obfuscate_url_service: obfuscate_url_service
+          retrieve_salt_adapter: mock_retrieve_salt_adapter
         )
       end
 
@@ -86,9 +80,13 @@ RSpec.describe CreateObfuscatedGitRepository do
 
     context 'when already exists a persisted git repository for given url' do
       let(:in_memory_git_repo_repository) { MockGitRepoRepository.new }
-      let(:mock_retrieve_salt_service) { MockRetrieveSaltService.new }
-      let(:obfuscate_url_service) do
-        ObfuscateUrlService.new(retrieve_salt_service: mock_retrieve_salt_service)
+      let(:mock_retrieve_salt_adapter) { MockRetrieveSaltAdapter.new }
+
+      subject(:create_obfuscated_git_repository) do
+        described_class.new(
+          git_repo_repository: in_memory_git_repo_repository,
+          retrieve_salt_adapter: mock_retrieve_salt_adapter
+        )
       end
 
       subject(:create_obfuscated_git_repository) do
