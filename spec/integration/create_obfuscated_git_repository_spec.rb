@@ -1,15 +1,24 @@
 # frozen_string_literal: true
 
 require_relative '../../lib/domain/use_cases/create_obfuscated_git_repository'
+require_relative '../../lib/domain/services/obfuscation/mock_retrieve_salt_service'
+require_relative '../../lib/database/mock_git_repo_repository'
 
 RSpec.describe CreateObfuscatedGitRepository do
-  let(:in_memory_git_repo_repository) { MockGitRepoRepository.new }
-
-  subject(:create_obfuscated_git_repository) do
-    described_class.new(git_repo_repository: in_memory_git_repo_repository)
-  end
-
   context 'when given url is a valid git repository url' do
+    let(:in_memory_git_repo_repository) { MockGitRepoRepository.new }
+    let(:mock_retrieve_salt_service) { MockRetrieveSaltService.new }
+    let(:obfuscate_url_service) do
+      ObfuscateUrlService.new(retrieve_salt_service: mock_retrieve_salt_service)
+    end
+
+    subject(:create_obfuscated_git_repository) do
+      described_class.new(
+        git_repo_repository: in_memory_git_repo_repository,
+        obfuscate_url_service: obfuscate_url_service
+      )
+    end
+
     let(:git_repository_url) { 'https://github.com/sirius-black/marauders-map' }
 
     after { in_memory_git_repo_repository.destroy_all }
@@ -42,6 +51,19 @@ RSpec.describe CreateObfuscatedGitRepository do
 
   describe 'failures' do
     context 'when given url is not a valid git repository url' do
+      let(:in_memory_git_repo_repository) { MockGitRepoRepository.new }
+      let(:mock_retrieve_salt_service) { MockRetrieveSaltService.new }
+      let(:obfuscate_url_service) do
+        ObfuscateUrlService.new(retrieve_salt_service: mock_retrieve_salt_service)
+      end
+
+      subject(:create_obfuscated_git_repository) do
+        described_class.new(
+          git_repo_repository: in_memory_git_repo_repository,
+          obfuscate_url_service: obfuscate_url_service
+        )
+      end
+
       let(:not_a_git_repository_url) { 'https://github.com' }
 
       after { in_memory_git_repo_repository.destroy_all }
@@ -58,6 +80,54 @@ RSpec.describe CreateObfuscatedGitRepository do
 
       it 'does not persist a git repository in database' do
         expect { create_obfuscated_git_repository.call(not_a_git_repository_url) }
+          .to_not(change { in_memory_git_repo_repository.all.size })
+      end
+    end
+
+    context 'when already exists a persisted git repository for given url' do
+      let(:in_memory_git_repo_repository) { MockGitRepoRepository.new }
+      let(:mock_retrieve_salt_service) { MockRetrieveSaltService.new }
+      let(:obfuscate_url_service) do
+        ObfuscateUrlService.new(retrieve_salt_service: mock_retrieve_salt_service)
+      end
+
+      subject(:create_obfuscated_git_repository) do
+        described_class.new(
+          git_repo_repository: in_memory_git_repo_repository,
+          obfuscate_url_service: obfuscate_url_service
+        )
+      end
+
+      let(:provider) { 'github' }
+      let(:owner) { 'sirius-black' }
+      let(:repo_name) { 'marauders-map' }
+      let(:git_repository_url) { "https://#{provider}.com/#{owner}/#{repo_name}" }
+
+      before do
+        git_repository = GitRepository.new(
+          original_url: git_repository_url,
+          obfuscated_url: '3URM7qomHSvNtd1VWZQl2LsjDHmqIMAdDv4qwx7ZW4s=',
+          name: repo_name,
+          owner_name: owner,
+          provider_name: provider
+        )
+        in_memory_git_repo_repository.save(git_repository)
+      end
+
+      after { in_memory_git_repo_repository.destroy_all }
+
+      xit 'fails' do
+        result = create_obfuscated_git_repository.call(git_repository_url)
+        expect(result.failure?).to eq(true)
+      end
+
+      xit 'returns an error message' do
+        result = create_obfuscated_git_repository.call(git_repository_url)
+        expect(result.failure).to be_a(String)
+      end
+
+      xit 'does not persist a git repository in database' do
+        expect { create_obfuscated_git_repository.call(git_repository_url) }
           .to_not(change { in_memory_git_repo_repository.all.size })
       end
     end

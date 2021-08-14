@@ -7,7 +7,7 @@ class MockRetrieveSaltService
 
   MINIMUM_SALT_LENGTH = 3
 
-  def initialize(salt = 'abcdefghijklmnopqrstuvwxyz')
+  def initialize(salt: 'abcdefghijklmnopqrstuvwxyz')
     @salt = salt
   end
 
